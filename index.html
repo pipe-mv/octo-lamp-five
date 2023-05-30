@@ -29,17 +29,31 @@
 
     <!-- (B) QUIZ CONTAINER -->
     <div class="container" id="quizBlock" style="display: none">
-      <div class="mb-5">
-        <h2>Test your knowledge</h2>
-        - Time remaining <span id="time">01:00</span>
+      <div class="mb-5 d-flex justify-content-around">
+        <div>
+          <h2>Test your knowledge</h2>
+          - Time remaining <span id="time">01:00</span>
+        </div>
+
+        <h1 class="correct text-success">
+          Correct: <span id="correct"></span>
+        </h1>
+        <h1 class="incorrect text-danger">
+          Incorrect: <span id="incorrect"></span>
+        </h1>
       </div>
+
       <div id="quizWrap"></div>
 
-      <div>
+      <div class="d-flex justify-content-around">
         <button type="button" class="btn btn-primary" id="btnSubmit">
           Submit Quiz
         </button>
-        <button type="button" class="btn btn-primary" id="btnReset">
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="btnReset"
+        >
           Reset Quiz
         </button>
         <span id="score"></span>
