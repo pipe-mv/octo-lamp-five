@@ -40,18 +40,18 @@ window.addEventListener("DOMContentLoaded", () => {
       a: 3,
     },
     {
-      q: "What is the capital of Australia",
+      q: "What is the capital of Australia?",
       o: ["Sydney", "Canberra", "Melbourne", "Perth"],
       a: 1,
     },
     {
-      q: "Which is the largest ocean on Earth?",
-      o: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+      q: "The Australian continent is perched on the planet's fastest moving tectonic plate - how fast is it moving each year?",
+      o: ["10 Meters", " 87 Centimeters", "2 Meters", "7 Centimeters"],
       a: 3,
     },
     {
-      q: "What is the capital of Australia",
-      o: ["Sydney", "Canberra", "Melbourne", "Perth"],
+      q: "What native wild fruit is illegal to forege in Australia?",
+      o: ["Bunya nuts", "Quandong", "Finger lime", "Kakadu plum"],
       a: 1,
     },
   ];
@@ -73,22 +73,19 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  //Reset button
   const btnRST = document.querySelector("#btnReset");
-  btnRST.addEventListener("click", function (e) {
-    console.log("nothing");
-    const score = calculateScore();
-  
-    document.querySelector('#correct').textContent = score
-    document.querySelector('#incorrect').textContent = quizArray.length - score 
+  btnRST.addEventListener("click", function () {
+    window.location.reload();
   });
 
+  //submit button
   const btnSubmit = document.querySelector("#btnSubmit");
   btnSubmit.addEventListener("click", function (e) {
-    // console.log("nothing");
     const score = calculateScore();
-  
-    document.querySelector('#correct').textContent = score
-    document.querySelector('#incorrect').textContent = quizArray.length - score 
+
+    document.querySelector("#correct").textContent = score;
+    document.querySelector("#incorrect").textContent = quizArray.length - score;
   });
 
   // Calculate the score
@@ -113,32 +110,43 @@ window.addEventListener("DOMContentLoaded", () => {
       });
     });
     return score;
-
-    // quizArray.map((quizItem, index) => {
-    //   for (let i = 0; i < quizArray.length; i++) {
-
-    //     for (let j = 0; j < quizArray[i].o.length; j++) {
-    //       const element = array[j];
-
-    //       let li = `li_${index}_${i}`;
-    //       console.log(li);
-    //       let r = `radio_${index}_${i}`;
-    //       liElement = document.querySelector("#" + li);
-    //       radioElement = document.querySelector("#" + r);
-
-    //       if (quizItem.a == i) {
-    //         liElement.style.background = "green";
-    //         //change background color of li element here
-    //       }
-    //     }
-    //     //highlight the li if it is the correct answer
-    //     if (radioElement.checked) {
-    //       score++;
-    //     }
-    //   }
-    // });
   };
 
+  //Finish quiz when time is over
+  const finishQuiz = () => {
+    const score = calculateScore();
+
+    document.querySelector("#correct").textContent = score;
+    document.querySelector("#incorrect").textContent = quizArray.length - score;
+  };
+
+  //Timer
+  function startTimer(duration, display) {
+    var timer = duration,
+      minutes,
+      seconds;
+    const endInterval = setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      display.textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        timer = duration;
+        clearInterval(endInterval);
+        finishQuiz();
+      }
+    }, 1000);
+  }
+
+  window.onload = function () {
+    var fiveMinutes = 60,
+      display = document.querySelector("#time");
+    startTimer(fiveMinutes, display);
+  };
   // call the displayQuiz function
   displayQuiz();
 });
